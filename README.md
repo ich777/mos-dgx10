@@ -141,7 +141,7 @@ After the container has been created, click on the container icon and select ter
 echo -e "HOME=/root\ncd /root" >> /root/.bashrc
 su root
 apt-get update
-apt-get install wget nano curl
+apt-get -y install wget nano curl
 apt-get -y upgrade
 apt-get -y autoremove
 wget -q -O /root/compile.sh https://github.com/ich777/mos-dgx10/raw/refs/heads/master/lxc/compile.sh
