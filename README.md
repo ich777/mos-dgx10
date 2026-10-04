@@ -144,7 +144,7 @@ apt-get update
 apt-get install wget nano curl
 apt-get -y upgrade
 apt-get -y autoremove
-wget -q -O /root/compile.sh https://docs.mos-official.net/docs/Installation/Create-Bootable-Media
+wget -q -O /root/compile.sh https://github.com/ich777/mos-dgx10/raw/refs/heads/master/lxc/compile.sh
 chmod +x /root/compile.sh
 wget -q -O /root/config_arm_spark https://github.com/ich777/mos-dgx10/raw/refs/heads/master/lxc/config_arm_spark
 ```
