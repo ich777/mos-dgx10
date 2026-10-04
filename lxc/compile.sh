@@ -54,15 +54,6 @@ if [ ! -f "$OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos_arm64.tar.xz" ] ; then
   # Install Modules to /lib/modules
   make -j$(nproc --all) modules_install
 
-  # Build Nvidia Hotplug module
-  rm -rf /tmp/nvidia-hotplug-module
-  cp -R /root/nvidia-hotplug-module /tmp/nvidia-hotplug-module
-  make -C $BUILD_DIR/$KERNEL_V M=/tmp/nvidia-hotplug-module modules
-  mkdir -p /lib/modules/$KERNEL_V-mos/kernel/drivers/platform/arm64/nvidia
-  strip --strip-debug /tmp/nvidia-hotplug-module/mtk-pcie-hotplug.ko
-  xz -9 -C crc32 /tmp/nvidia-hotplug-module/mtk-pcie-hotplug.ko
-  cp /tmp/nvidia-hotplug-module/mtk-pcie-hotplug.ko.xz /lib/modules/$KERNEL_V-mos/kernel/drivers/platform/arm64/nvidia/
-
   # Clone Linux Firmware
   cd $WORK_DIR
   git clone --depth 1 https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git $WORK_DIR/firmware-source
@@ -221,8 +212,8 @@ Description: ${DRIVER_NAME}-opensource drivers for MOS
 EOF
 
 cd $DRIVER_BUILD_DIR
-dpkg-deb --build package $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_amd64.deb
+dpkg-deb --build package $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_arm64.deb
 
-md5sum $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_amd64.deb | awk '{print $1}' > $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_amd64.deb.md5
+md5sum $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_arm64.deb | awk '{print $1}' > $OUTPUT_DIR/$KERNEL_V/${KERNEL_V}-mos/${DRIVER_NAME}-opensource_${OPENSOURCE_DRV_V_PKG}-1+mos_arm64.deb.md5
 
 rm -rf $WORK_DIR/firmware-source $WORK_DIR/linux-firmware $WORK_DIR/build $WORK_DIR/required_firmware $WORK_DIR/required_firmware_complete $WORK_DIR/$KERNEL_V /tmp/nvidia-hotplug-module
